@@ -251,3 +251,4 @@
 /Users/rajjoshi/Documents/GitHub/sampleApplication.API/sampleApplication.API/obj/Debug/net8.0/sampleApplication.API.pdb
 /Users/rajjoshi/Documents/GitHub/sampleApplication.API/sampleApplication.API/obj/Debug/net8.0/sampleApplication.API.genruntimeconfig.cache
 /Users/rajjoshi/Documents/GitHub/sampleApplication.API/sampleApplication.API/obj/Debug/net8.0/ref/sampleApplication.API.dll
+/Users/rajjoshi/Documents/GitHub/sampleApplication.API/sampleApplication.API/obj/Debug/net8.0/sampleApplication.API.sourcelink.json

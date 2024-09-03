@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using sampleApplication.API.Model;
 
-    public class ApplicationDbContext : DbContext
+public class ApplicationDbContext : DbContext
+{
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        : base(options)
     {
-        public ApplicationDbContext (DbContextOptions<ApplicationDbContext> options)
-            : base(options)
-        {
-        }
-
-        public DbSet<sampleApplication.API.Model.sampleModel> sampleModel { get; set; } = default!;
     }
+
+    public DbSet<sampleApplication.API.Model.ToDoTasks> sampleModel { get; set; } = default!;
+}

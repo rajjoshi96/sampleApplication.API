@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using sampleApplication.API.Interface;
 using sampleApplication.API.Model;
+using sampleApplication.API.Repos;
 
 namespace sampleApplication.API
 {
@@ -13,97 +15,101 @@ namespace sampleApplication.API
     [ApiController]
     public class ToDosController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IToDoTaskInterface _tasks;
 
-        public ToDosController(ApplicationDbContext context)
+        public ToDosController(IToDoTaskInterface tasks)
         {
-            _context = context;
+            _tasks = tasks;
         }
 
         // GET: api/Controller/ToDos
         [HttpGet("GetListToDos")]
         public IActionResult GetSampleModel()
         {
-            var response = new sampleModel
-            {
-                id = 1,
-                name = "Hello"
-            };
-            return Ok(response);
+
+            var getReponse = _tasks.GetAllTasks();
+
+            return Ok(getReponse);
             // return await _context.sampleModel.ToListAsync();
         }
 
         // GET: api/Controller/ToDos/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<sampleModel>> GetsampleModel(int id)
-        {
-            var sampleModel = await _context.sampleModel.FindAsync(id);
+        // [HttpGet("{id}")]
+        // public async Task<ActionResult<ToDoTasks>> GetsampleModel(int id)
+        // {
+        //     var sampleModel = await _context.sampleModel.FindAsync(id);
 
-            if (sampleModel == null)
-            {
-                return NotFound();
-            }
+        //     if (sampleModel == null)
+        //     {
+        //         return NotFound();
+        //     }
 
-            return sampleModel;
-        }
+        //     return sampleModel;
+        // }
 
         // PUT: api/Controller/ToDos/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutsampleModel(int id, sampleModel sampleModel)
-        {
-            if (id != sampleModel.id)
-            {
-                return BadRequest();
-            }
+        // [HttpPut("{id}")]
+        // public async Task<IActionResult> PutsampleModel(int id, ToDoTasks sampleModel)
+        // {
 
-            _context.Entry(sampleModel).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                // if (!sampleModelExists(id))
-                // {
-                //     return NotFound();
-                // }
-                // else
-                // {
-                //     throw;
-                // }
-            }
+        //     _context.Entry(sampleModel).State = EntityState.Modified;
 
-            return NoContent();
-        }
+        //     try
+        //     {
+        //         await _context.SaveChangesAsync();
+        //     }
+        //     catch (DbUpdateConcurrencyException)
+        //     {
+        //         // if (!sampleModelExists(id))
+        //         // {
+        //         //     return NotFound();
+        //         // }
+        //         // else
+        //         // {
+        //         //     throw;
+        //         // }
+        //     }
+
+        //     return NoContent();
+        // }
 
         // POST: api/Controller/ToDos
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<sampleModel>> PostsampleModel(sampleModel sampleModel)
-        {
-            _context.sampleModel.Add(sampleModel);
-            await _context.SaveChangesAsync();
+        // [HttpPost("AddNewToDo")]
+        // public async Task<ActionResult<ToDoTasks>> PostsampleModel(ToDoTaskDTO sampleModel)
+        // {
+        //     ToDoTasks newTask = new ToDoTasks
+        //     {
+        //         id = new Guid(),
+        //         taskName = sampleModel.taskName,
+        //         taskTime = sampleModel.taskTime,
+        //         isComplete = sampleModel.isComplete
+        //     };
+        //     _context.sampleModel.Add(sampleModel);
+        //     await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetsampleModel", new { id = sampleModel.id }, sampleModel);
-        }
+        //     return CreatedAtAction("GetsampleModel", new { id = sampleModel.id }, sampleModel);
+        // }
 
         // DELETE: api/Controller/ToDos/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletesampleModel(int id)
-        {
-            var sampleModel = await _context.sampleModel.FindAsync(id);
-            if (sampleModel == null)
-            {
-                return NotFound();
-            }
+        // [HttpDelete("{id}")]
+        // public async Task<IActionResult> DeletesampleModel(int id)
+        // {
+        //     var sampleModel = await _context.sampleModel.FindAsync(id);
+        //     if (sampleModel == null)
+        //     {
+        //         return NotFound();
+        //     }
 
-            _context.sampleModel.Remove(sampleModel);
-            await _context.SaveChangesAsync();
+        //     _context.sampleModel.Remove(sampleModel);
+        //     await _context.SaveChangesAsync();
 
-            return NoContent();
-        }
+        //     return NoContent();
+        // }
+
+
 
         // private bool sampleModelExists(int id)
         // {
