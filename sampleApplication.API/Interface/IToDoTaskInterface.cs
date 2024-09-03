@@ -4,6 +4,8 @@ namespace sampleApplication.API.Interface
 {
     public interface IToDoTaskInterface
     {
-        public ToDoTasks GetAllTasks();
+        public Task<List<ToDoTasks>> GetAllTasks();
+
+        public ToDoTasks AddNewTask(ToDoTaskDTO taskDTO);
     }
 }

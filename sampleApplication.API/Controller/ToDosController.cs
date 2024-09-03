@@ -24,15 +24,24 @@ namespace sampleApplication.API
 
         // GET: api/Controller/ToDos
         [HttpGet("GetListToDos")]
-        public IActionResult GetSampleModel()
+        public async Task<IActionResult> GetSampleModel()
         {
 
-            var getReponse = _tasks.GetAllTasks();
+            var getReponse = await _tasks.GetAllTasks();
 
             return Ok(getReponse);
-            // return await _context.sampleModel.ToListAsync();
         }
 
+        [HttpPost("AddTask")]
+        public async Task<IActionResult> AddNewTask(ToDoTaskDTO taskDTO)
+        {
+            var response = _tasks.AddNewTask(taskDTO);
+
+
+
+            return Ok(response);
+
+        }
         // GET: api/Controller/ToDos/5
         // [HttpGet("{id}")]
         // public async Task<ActionResult<ToDoTasks>> GetsampleModel(int id)

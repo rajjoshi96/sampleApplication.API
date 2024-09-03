@@ -1,19 +1,42 @@
+using Microsoft.EntityFrameworkCore;
 using sampleApplication.API.Interface;
 using sampleApplication.API.Model;
 
 namespace sampleApplication.API.Repos
 {
+
     public class ToDoTaskRepo : IToDoTaskInterface
     {
-        public ToDoTasks GetAllTasks()
+        private readonly ApplicationDbContext _dbContext;
+        public ToDoTaskRepo(ApplicationDbContext dbContext)
         {
-            var response = new ToDoTasks
-            {
+            _dbContext = dbContext;
+        }
 
-                taskName = "Wash Clothes",
-                taskTime = DateTime.Now,
-                isComplete = false
+        public ToDoTasks AddNewTask(ToDoTaskDTO taskDTO)
+        {
+            var newTask = new ToDoTasks
+            {
+                id = new Guid(),
+                taskName = taskDTO.taskName,
+                taskTime = taskDTO.taskTime,
+                isComplete = taskDTO.isComplete
             };
+
+
+            var blogs = _dbContext.sampleModel.Add(newTask);
+            _dbContext.SaveChanges();
+
+            return newTask;
+
+        }
+
+        public async Task<List<ToDoTasks>> GetAllTasks()
+        {
+            var response = await _dbContext.sampleModel.ToListAsync();
+            Console.WriteLine(response[0].taskName);
+
+
             return response;
         }
     }
